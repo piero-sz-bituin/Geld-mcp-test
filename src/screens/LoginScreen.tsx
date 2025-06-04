@@ -6,7 +6,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const isValidEmailDomain = (email) => email.endsWith('@bituin.cl');
+  const isValidEmailDomain = (email: string) => email.endsWith('@bituin.cl');
 
   const handleLogin = async () => {
     if (!isValidEmailDomain(email)) {
@@ -17,7 +17,11 @@ const LoginScreen = () => {
       await auth().signInWithEmailAndPassword(email, password);
       alert('Login successful!');
     } catch (error) {
-      alert(`Login failed: ${error.message}`);
+      if (error instanceof Error) {
+        alert(`Login failed: ${error.message}`);
+      } else {
+        alert('Login failed: An unknown error occurred.');
+      }
     }
   };
 
@@ -30,7 +34,11 @@ const LoginScreen = () => {
       await auth().createUserWithEmailAndPassword(email, password);
       alert('Registration successful!');
     } catch (error) {
-      alert(`Registration failed: ${error.message}`);
+      if (error instanceof Error) {
+        alert(`Registration failed: ${error.message}`);
+      } else {
+        alert('Registration failed: An unknown error occurred.');
+      }
     }
   };
 
