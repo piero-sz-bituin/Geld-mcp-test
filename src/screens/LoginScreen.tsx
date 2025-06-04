@@ -6,7 +6,13 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isValidEmailDomain = (email) => email.endsWith('@bituin.cl');
+
   const handleLogin = async () => {
+    if (!isValidEmailDomain(email)) {
+      alert('Access restricted to @bituin.cl emails only.');
+      return;
+    }
     try {
       await auth().signInWithEmailAndPassword(email, password);
       alert('Login successful!');
@@ -16,6 +22,10 @@ const LoginScreen = () => {
   };
 
   const handleRegister = async () => {
+    if (!isValidEmailDomain(email)) {
+      alert('Access restricted to @bituin.cl emails only.');
+      return;
+    }
     try {
       await auth().createUserWithEmailAndPassword(email, password);
       alert('Registration successful!');
